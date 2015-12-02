@@ -8,7 +8,7 @@ var postsByPage = 13;
 var nbPage = Math.floor(nbPostsWanted/postsByPage)+1;
 var id = 0;
 
-// Scraping 10 first pages
+// Scraping n first pages
 for (var i = 0; i < nbPage; i++) {
 
     var urlSpec = url + i;
