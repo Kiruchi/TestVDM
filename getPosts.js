@@ -70,14 +70,17 @@ for (var i = 0; i < nbPage; i++) {
 
                     // Increment id
                     id++;
-                } else {
-                    db.disconnect();
                 }
             });
 
             Post.collection.insert(vdmPosts, function (err) {
                 if (err) {
                     console.log("Error inserting posts");
+                } else {
+                    if(id == nbPostsWanted) {
+                        console.log("VDM posts successfully saved !");
+                        db.disconnect();
+                    }
                 }
             });
         } else {
