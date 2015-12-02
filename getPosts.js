@@ -1,12 +1,28 @@
 var request = require('request');
 var cheerio = require('cheerio');
+var mongoose = require('mongoose');
 
+var db = mongoose.connect('mongodb://localhost:27017/testVDM'); // Connect to the MongoDB database
 var url = 'http://www.viedemerde.fr/?page=';
 var classPosts = '.article';
 var nbPostsWanted = 200;
 var postsByPage = 13;
-var nbPage = Math.floor(nbPostsWanted/postsByPage)+1;
+var nbPage = Math.floor(nbPostsWanted / postsByPage) + 1;
 var id = 0;
+var Post = require('./app/models/post');
+
+
+console.log("This script will get the " + nbPostsWanted + " last VDM posts and save them in MongoDB.");
+console.info("Dropping previous collection...");
+
+// We drop the previous posts
+Post.collection.drop(function (err) {
+    if (err) {
+        console.log("No collection dropped, ok if it is the first time you run this script.")
+    }
+});
+
+console.log("Gathering VDM posts...");
 
 // Scraping n first pages
 for (var i = 0; i < nbPage; i++) {
@@ -20,7 +36,7 @@ for (var i = 0; i < nbPage; i++) {
             var $ = cheerio.load(html);
             var posts = $(classPosts);
             $(posts).each(function () {
-                if(id !== nbPostsWanted) {
+                if (id !== nbPostsWanted) {
                     // Scraping data with Cheerio
                     var curPost = $(this);
 
@@ -54,10 +70,16 @@ for (var i = 0; i < nbPage; i++) {
 
                     // Increment id
                     id++;
+                } else {
+                    db.disconnect();
                 }
             });
 
-            console.log(vdmPosts);
+            Post.collection.insert(vdmPosts, function (err) {
+                if (err) {
+                    console.log("Error inserting posts");
+                }
+            });
         } else {
             console.log("Oops, I can't access " + url);
         }
