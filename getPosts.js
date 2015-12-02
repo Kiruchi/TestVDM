@@ -60,7 +60,7 @@ for (var i = 0; i < nbPage; i++) {
                     author = author.trim();
 
                     var newItem = {
-                        id: id,
+                        id: id+1,
                         content: contentPost,
                         date: datePost,
                         author: author
