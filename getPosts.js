@@ -6,13 +6,12 @@ var classPosts = '.article';
 var nbPostsWanted = 200;
 var postsByPage = 13;
 var nbPage = Math.floor(nbPostsWanted/postsByPage)+1;
-//var vdmPosts = [];
 var id = 0;
 
 // Scraping 10 first pages
-for (var nbPage = 0; nbPage < 16; nbPage++) {
+for (var i = 0; i < nbPage; i++) {
 
-    var urlSpec = url + nbPage;
+    var urlSpec = url + i;
 
     // Do a GET to the URL
     request(urlSpec, function (error, response, html) {
@@ -22,8 +21,6 @@ for (var nbPage = 0; nbPage < 16; nbPage++) {
             var posts = $(classPosts);
             $(posts).each(function () {
                 if(id !== nbPostsWanted) {
-                    // Increment id
-                    id++;
                     // Scraping data with Cheerio
                     var curPost = $(this);
 
@@ -41,16 +38,22 @@ for (var nbPage = 0; nbPage < 16; nbPage++) {
                     var arrayDate = date.match(pattern);
                     var datePost = arrayDate[3] + "-" + arrayDate[2] + "-" + arrayDate[1] + " " + heure + ":00";
                     // Parse author
-                    var author = mySplit[2].split('par ')[1].split(' ')[0];
+                    var author = mySplit[2].split('par ')[1];
+                    author = author.split(' (homme)')[0];
+                    author = author.split(' (femme)')[0];
+                    author = author.trim();
 
                     var newItem = {
                         id: id,
                         content: contentPost,
                         date: datePost,
-                        author: author,
+                        author: author
                     };
 
                     vdmPosts.push(newItem);
+
+                    // Increment id
+                    id++;
                 }
             });
 
