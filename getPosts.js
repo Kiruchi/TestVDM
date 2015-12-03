@@ -11,9 +11,8 @@ var nbPage = Math.floor(nbPostsWanted / postsByPage) + 1;
 var id = 0;
 var Post = require('./app/models/post');
 
-
 console.log("This script will get the " + nbPostsWanted + " last VDM posts and save them in MongoDB.");
-console.info("Dropping previous collection...");
+console.log("Dropping previous collection...");
 
 // We drop the previous posts
 Post.collection.drop(function (err) {
@@ -27,15 +26,19 @@ console.log("Gathering VDM posts...");
 // Scraping n first pages
 for (var i = 0; i < nbPage; i++) {
 
+    // Request the right URL for the page i
     var urlSpec = url + i;
 
     // Do a GET to the URL
     request(urlSpec, function (error, response, html) {
         if (!error && response.statusCode == 200) {
             var vdmPosts = [];
+            // Use Cheerio as a server-side JQuery-like
             var $ = cheerio.load(html);
             var posts = $(classPosts);
+            // Use the right selector to get the posts
             $(posts).each(function () {
+                // Continue if we still have posts to save
                 if (id !== nbPostsWanted) {
                     // Scraping data with Cheerio
                     var curPost = $(this);
@@ -59,13 +62,15 @@ for (var i = 0; i < nbPage; i++) {
                     author = author.split(' (femme)')[0];
                     author = author.trim();
 
+                    // Creating a new item with the right parameters
                     var newItem = {
-                        id: id+1,
+                        id: id + 1,
                         content: contentPost,
                         date: datePost,
                         author: author
                     };
 
+                    // Adding this item to this page's posts array
                     vdmPosts.push(newItem);
 
                     // Increment id
@@ -73,17 +78,22 @@ for (var i = 0; i < nbPage; i++) {
                 }
             });
 
+            // Insert this page's posts in MongoDB
             Post.collection.insert(vdmPosts, function (err) {
+                // Say if there is an error
                 if (err) {
                     console.log("Error inserting posts");
                 } else {
-                    if(id == nbPostsWanted) {
+                    // Stop if we have saved nbPostsWanted objects
+                    if (id == nbPostsWanted) {
                         console.log("VDM posts successfully saved !");
+                        // Disconnect MongoDB
                         db.disconnect();
                     }
                 }
             });
         } else {
+            // Network error
             console.log("Oops, I can't access " + url);
         }
     });

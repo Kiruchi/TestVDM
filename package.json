@@ -4,7 +4,7 @@
   "description": "Test recrutement iAdvize, recuperation de donnees de VDM et API REST",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jasmine-node spec/"
   },
   "keywords": [
     "test",
@@ -17,10 +17,12 @@
   "author": "Pierre Martin",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.14.1",
     "cheerio": "^0.19.0",
     "express": "^4.13.3",
     "mongoose": "^4.2.8",
     "request": "^2.67.0"
+  },
+  "devDependencies": {
+    "frisby": "^0.8.5"
   }
 }
