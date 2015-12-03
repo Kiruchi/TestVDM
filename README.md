@@ -12,12 +12,12 @@
 
 # But how is it built ?
 
-<p align="center">
-<img style="width:100%" src="http://49.media.tumblr.com/b62dbc153c731875a1659093cbb9b548/tumblr_no6vc1gifh1qiaxzfo2_250.gif"/>
-</p>
-
 - NodeJS
 - Cheerio for scraping
 - Mongoose
 - MongoDB
 - Express for the REST API
+
+<p align="center">
+<img style="width:100%" src="https://media.giphy.com/media/mXuPwEBHCtaH2ndoBy/giphy.gif"/>
+</p>
