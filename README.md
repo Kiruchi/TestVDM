@@ -10,7 +10,7 @@
 - Run `node getPosts.js` in the first cli to save the VDM posts to the DB
 - Run `npm start` or `node server.js` to launch the REST API
 - Test it on [http://localhost:8080/api](http://localhost:8080/api) (or on your environment variable PORT instead of 8080)
-- Run the unit tests with `npm test` or `jasmine-node spec/`
+- Make sure the API is still running, and run the unit tests with `npm test` or `jasmine-node spec/`
 
 # But how is it built ?
 
