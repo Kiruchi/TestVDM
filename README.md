@@ -2,7 +2,7 @@
 
 # Usage
 - Install [NodeJS](https://nodejs.org/en/)
-- Install [MongoDB for Windows](http://stackoverflow.com/questions/2404742/how-to-install-mongodb-on-windows) or [MongoDB for iOS](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/ depending on OS)
+- Install [MongoDB for Windows](http://stackoverflow.com/questions/2404742/how-to-install-mongodb-on-windows) or [MongoDB for iOS](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/)
 - Clone the Github repo
 - Run `npm install` in the local repo folder
 - Run `mongod` in another cli
