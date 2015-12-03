@@ -19,6 +19,8 @@
 - Mongoose
 - MongoDB
 - Express for the REST API
+- Jasmine-Node
+- Frisby for the unit tests
 
 <p align="center">
     <img style="width:100%" src="https://media.giphy.com/media/mXuPwEBHCtaH2ndoBy/giphy.gif"/>
